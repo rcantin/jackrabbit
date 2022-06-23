@@ -132,7 +132,7 @@
                   <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab" tabindex="0">
                       <!-- grid layout -->
-                      <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4">
+                      <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4 pb-5">
                         <div class="col" ng-repeat="class in results = (classes | orderBy:['min_age','start_date'] | filter:searchparam | filter:filterAge | filter:{category2:camptype} | filter:subfilter | dayFilter:daygroup.short)">
                           <div class="card shadow h-100">
                             <div class="card-body">
@@ -186,7 +186,7 @@
                     <div class="tab-pane fade" id="pills-table" role="tabpanel" aria-labelledby="pills-table-tab" tabindex="0">
                       <!-- table layout -->
                       <div class="table-responsive-md">
-                        <table class="table table-striped">
+                        <table class="table table-striped mb-5">
                           <tbody>
                             <tr ng-repeat="class in results = (classes | orderBy:['start_date','min_age'] | filter:searchparam | filter:filterAge | filter:{category2:camptype} | filter:subfilter | dayFilter:daygroup.short)">
                               <td class="w-100">
@@ -237,15 +237,19 @@
             </div>
           </div>
     
-          <!-- <div ng-init="getClasses('Camp', 'Recreational Gymnastics', '')" ng-controller="ClassController">
-            <div ng-include="'./_list-basic.html'" ng-init="brandColor='danger'"></div>
-          </div> -->
-    
           <!-- <div class="py-5">
             <hr>
-          </div> -->
+          </div>
+        
+          <div ng-init="getClasses('Camp', 'Recreational Gymnastics', '')" ng-controller="ClassController">
+            <div ng-include="'./_list-basic.html'" ng-init="brandColor='danger'"></div>
+          </div>
     
-          <!-- <div ng-init="getClasses('Dance', 'Recreational', 'Hip Hop')" ng-controller="ClassController">
+          <div class="py-5">
+            <hr>
+          </div>
+    
+          <div ng-init="getClasses('Dance', 'Recreational', 'Hip Hop')" ng-controller="ClassController">
             <div ng-include="'./_list-byday.html'" ng-init="brandColor='info'"></div>
           </div> -->
           

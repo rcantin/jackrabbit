@@ -1,9 +1,9 @@
 <!-- while waiting for classes... -->
-<div ng-if="!classesreturned" class="font-weight-light pb-4"><i class="fas fa-spinner fa-pulse mr-2"></i>Loading classes...</div>
+<div ng-if="requestingclassdata" class="fw-light pb-4"><i class="fas fa-spinner fa-pulse me-2"></i>Loading classes...</div>
 
 <!-- once classes are returned -->
-<div ng-if="classesreturned">
-  <div class="h4 mb-4 font-weight-bold" ng-class="'text-' + brandColor">Class Registration</div>
+<div ng-if="!requestingclassdata">
+  <div class="h4 mb-4 fw-bold" ng-class="'text-' + brandColor">Class Registration</div>
 
   <!-- if zero classes are returned once request is complete -->
   <div ng-show="classes.length == 0" class="font-weight-light">No classes found</div>
