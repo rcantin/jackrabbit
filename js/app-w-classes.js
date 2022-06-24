@@ -15,12 +15,47 @@ myApp.controller("MainController", function ($scope, $http, serviceLocalStorage)
   serviceLocalStorage.set("LocalStorageExample", "Local Storage Example");
   $scope.storageexample = serviceLocalStorage.get('LocalStorageExample');
 
-  $scope.camptype = "Dance";
+  // default class type
+  $scope.classtype = "Tae Kwon Do";
 
   $scope.setClassModal = function (classdata) {
     $scope.classModalDetail = classdata;
     console.log($scope.classModalDetail)
   }
+
+  $scope.filterAge = function(item){
+    var filterAge = $scope.age;
+    if (filterAge) { // check if there is an age entered and if not then just return the item
+      var min = item.min_age * 1;
+      var max = item.max_age * 1;
+      if (filterAge >= min && filterAge <= max) { // if the age is between the min and max, return the item
+        return item
+      }
+    }
+    else { // if no age is entered, just return the item regardless
+      return item
+    }
+  };
+
+  $scope.dayFilters = {
+    mon: true,
+    tue: true,
+    wed: true,
+    thu: true,
+    fri: true,
+    sat: true,
+    sun: true,
+  };
+  $scope.filterDay = function(item){
+    const entries = Object.entries($scope.dayFilters);
+    for (const entry of entries) {
+      if (entry[1] == true) {
+        if (item.meeting_days.daylist.includes(entry[0])) {
+          return item;
+        }
+      }
+    }
+  };
 
 });
 
@@ -34,7 +69,8 @@ myApp.controller("ClassController", function ($scope, $http) {
         "Content-Type": undefined,
       },
       params: {
-        OrgId: "520628", // this is TDC's OrgId so you will have to change it to use yours
+        OrgId: "546238", // DMA OrgId
+        // OrgId: "520628", // this is TDC's OrgId so you will have to change it to use yours
         ClassDays: day,
         Status: "Active",
         Cat1: cat1,
@@ -118,24 +154,6 @@ myApp.filter("to_trusted", [
     };
   },
 ]);
-
-myApp.filter("ageFilter", function () {
-  return function (items, filterAge) {
-    var result = [];
-    if (filterAge) {
-      angular.forEach(items, function (item) {
-        var min = item.min_age * 1;
-        var max = item.max_age * 1;
-        if (filterAge >= min && filterAge <= max) {
-          result.push(item);
-        }
-      });
-      return result;
-    } else {
-      return items;
-    }
-  };
-});
 
 myApp.filter("dayFilter", function () {
   return function (items, filterDay) {

@@ -2,265 +2,53 @@
 <html lang="en" ng-app="myApp" ng-controller="MainController">
   <head>
     <meta charset="utf-8" />
+    <link rel="shortcut icon" href="./img/kicker.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link href="scss/theme.css" type="text/css" rel="Stylesheet" />
+    <link href="./scss/theme.css" type="text/css" rel="Stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js" integrity="sha512-OboE6z4eMJ4Z58c77mLjwOChLo1ZoGMdBTd2ggt0PyheD8irXxmQBCqZkLPlz/rNC1f9kPsDuHRNuL2HKkm9FA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>    <script src="js/app-w-classes.js"></script>
-    <title>Jackrabbit API Usage</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js" integrity="sha512-OboE6z4eMJ4Z58c77mLjwOChLo1ZoGMdBTd2ggt0PyheD8irXxmQBCqZkLPlz/rNC1f9kPsDuHRNuL2HKkm9FA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./js/app-w-classes.js"></script>
+    <title>Determination Martial Arts</title>
   </head>
-  <body ng-cloak class="pt-5" ng-init="brandColor='primary'">
+  <body ng-cloak>
 
-
-    <!-- modal window for class detail -->
-    <div class="modal fade" id="classModal" tabindex="-1" aria-labelledby="classModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title pe-3" id="classModalLabel">{{classModalDetail.name}}</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="row row-cols-2 g-3 mb-4">
-              <div class="col text-center">
-                <div class="text-uppercase text-muted fw-light">Date</div>
-                <div class="fw-bold">{{classModalDetail.start_date | date:'mediumDate'}} - {{classModalDetail.end_date | date:'mediumDate'}}</div>
-              </div>
-              <div class="col text-center">
-                <div class="text-uppercase text-muted fw-light">Time</div>
-                <div class="fw-bold text-capitalize"><span>{{classModalDetail.start_time}} - {{classModalDetail.end_time}}</span></div>
-              </div>
-              <div class="col text-center">
-                <div class="text-uppercase text-muted fw-light">Ages</div>
-                <div class="fw-bold">{{classModalDetail.min_age}} - {{classModalDetail.max_age}}</div>
-              </div>
-              <div class="col text-center">
-                <div class="text-uppercase text-muted fw-light">Tuition</div>
-                <div class="fw-bold">{{ classModalDetail.tuition.fee | currency:'$':2 }} +HST</div>
-              </div>
-            </div>
-            <p ng-bind-html="classModalDetail.description | to_trusted"></p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
-            <div ng-if="!classModalDetail.online_reg_link" class="pt-2 small fw-light">Contact us to register</div>
-            <div ng-if="classModalDetail.online_reg_link">
-              <a ng-if="classModalDetail.openings.calculated_openings > 0" ng-href="{{classModalDetail.online_reg_link}}" target="_blank" class="btn px-4 text-white" ng-class="'btn-' + brandColor">Register</a>
-              <a ng-if="classModalDetail.openings.calculated_openings <= 0" ng-href="{{classModalDetail.online_reg_link}}" target="_blank" class="btn px-4" ng-class="'btn-outline-' + brandColor">Wait List</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Jackrabbit API Example</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 mt-3 mt-lg-0 align-items-center">
-            <li class="nav-item">
-              <div class="fw-light text-white p-2">Designed with</div>
-            </li>
-            <!-- <span class="text-white fw-light">|</span> -->
-            <li class="nav-item">
-              <a class="nav-link text-primary" href="https://getbootstrap.com/docs/5.2/getting-started/introduction/" target="_blank" rel="no-referrer"><i class="fa-brands fa-bootstrap fa-lg me-1"></i>Bootstrap</a>
-            </li>
-            <!-- <span class="text-white fw-light">|</span> -->
-            <li class="nav-item">
-              <a class="nav-link text-primary" href="https://angularjs.org/" target="_blank" rel="no-referrer"><i class="fa-brands fa-angular fa-lg me-1"></i>AngularJS</a>
-            </li>
-            <!-- <span class="text-white fw-light">|</span> -->
-            <li class="nav-item">
-              <a class="nav-link text-primary" href="https://fontawesome.com/icons" target="_blank" rel="no-referrer"><i class="fa-solid fa-font-awesome fa-lg me-1"></i>Font Awesome Icons</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <!-- banner include -->
+    <div ng-include src="'./banner.html'"></div>
 
     <div class="content-wrapper">
       <div class="body">
-        <div class="container py-5">
-          <div class="h2">Camp Registration</div>
-          <div class="fw-light">This example page demonstrates how to use the Jackrabbit Class API.  The page is created using AngularJS and Bootstrap in order to make it more visually appealing and functional, but the approach can be used in any framework with a bit of modification.</div>
-    
-          <div ng-init="getClasses('Camp', '', '');" ng-controller="ClassController">
-            <!-- while waiting for classes... -->
-            <div ng-if="requestingclassdata" class="py-4 text-center"><i class="fas fa-spinner fa-pulse me-2"></i>Getting class data...</div>
-    
-            <!-- once classes are returned -->
-            <div ng-if="!requestingclassdata">
-    
-              <!-- search and filter -->
-              <div class="row align-items-end g-4 py-5">
-                <div class="col-12 col-lg-5">
-                  <div class="">
-                    <label for="search" class="form-label mb-1 small fw-bold">Search</label>
-                    <input type="search" class="form-control" ng-model="searchparam" id="search" placeholder='Search by keyword (eg. "Ballet")...'>
-                  </div>
-                </div>
-                <div class="col col-lg-4">
-                  <label for="camptype" class="form-label mb-1 small fw-bold">Camp Type</label>
-                  <select ng-model="camptype" class="form-select" id="">
-                    <option value="Dance">Dance Camps</option>
-                    <option value="Gymnastics">Gymnastics Camps</option>
-                    <option value="Martial Arts">Martial Arts Camps</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <!-- <label class="form-label mb-1 small fw-bold">Layout</label> -->
-                  <ul class="nav nav-pills justify-content-end mb-0" id="pills-tab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link small active" id="pills-grid-tab" data-bs-toggle="pill" data-bs-target="#pills-grid" type="button" role="tab" aria-controls="pills-grid" aria-selected="true"><i class="fa-solid fa-grip me-1"></i>Grid</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link small" id="pills-table-tab" data-bs-toggle="pill" data-bs-target="#pills-table" type="button" role="tab" aria-controls="pills-table" aria-selected="false"><i class="fa-solid fa-bars me-1"></i>Table</button>
-                    </li>
-                  </ul>
-                </div>
+        <div class="container">
+          <div class="h2 text-secondary">Welcome!</div>
+          
+          <div class="row g-5">
+            <div class="col-12 col-md-8">
+              <div class="fw-light">Lorem ipsum dolor sit amet. Et optio dolorem eum quam galisum est inventore nesciunt et incidunt nulla. Et beatae mollitia sed soluta rerum qui cumque corrupti vel voluptatem ipsa sed nobis tenetur sit molestiae nobis.</div>
+              <div class="py-4">
+                <a href="./classlist.html" class=" btn btn-lg btn-primary text-white text-uppercase">Go To Class List</a>
               </div>
-        
-              <!-- if zero classes are returned once request is complete -->
-              <div ng-show="classes.length == 0" class="text-danger">No classes found</div>
-    
-              <!-- if one or more classes are returned -->
-              <div ng-show="classes.length > 0">
-                <div>
-    
-                  <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="pills-grid" role="tabpanel" aria-labelledby="pills-grid-tab" tabindex="0">
-                      <!-- grid layout -->
-                      <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4 pb-5">
-                        <div class="col" ng-repeat="class in results = (classes | orderBy:['min_age','start_date'] | filter:searchparam | filter:filterAge | filter:{category2:camptype} | filter:subfilter | dayFilter:daygroup.short)">
-                          <div class="card shadow h-100">
-                            <div class="card-body">
-                              <div class="d-flex justify-content-between">
-                                <div class="h6" ng-if="class.name">{{class.name}}</div>
-                                <div>
-                                  <!-- open modal window for class detail -->
-                                  <button type="button" class="btn btn-link p-0" ng-click="setClassModal(class)" data-bs-toggle="modal" data-bs-target="#classModal">
-                                    <i class="fa-solid fa-circle-info fa-lg"></i>
-                                  </button>
-                                </div>
-                              </div>
-                              <div class="small">
-                                <div ng-if="class.start_date" class="">{{class.start_date | date:'mediumDate'}} - {{class.end_date | date:'mediumDate'}}</div>
-                                <div ng-if="class.meeting_days.daylist" class="text-capitalize"><span>{{class.start_time}} - {{class.end_time}}</span></div>
-                                <div ng-if="class.min_age">Ages {{class.min_age}} - {{class.max_age}}</div>
-                              </div>
-                              <!-- <div class="py-2">
-                                <a class="small fw-bold text-nowrap" ng-class="'text-' + brandColor" data-bs-toggle="collapse" href="#collapseExample{{$index}}" role="button" aria-expanded="false" aria-controls="collapseExample{{$index}}">
-                                  <span class="me-1">Camp Description</span>
-                                  <i class="fas fa-chevron-down expanded-indicator"></i>
-                                </a>
-                              </div>
-                              <div class="collapse" id="collapseExample{{$index}}">
-                                <div ng-if="class.description" class="small fw-light" ng-bind-html="class.description | to_trusted"></div>
-                              </div> -->
-                            </div>
-                            <div class="px-3 pb-3">
-                              <hr>
-                              <div class="d-flex justify-content-end align-items-center">
-                                <div class="pe-3">
-                                  <div ng-if="class.tuition.fee" class="d-flex justify-content-end align-items-end">
-                                    <div class="fw-bold">{{ class.tuition.fee | currency:'$':2 }}</div>
-                                    <div class="fw-light small ms-1">+HST</div>
-                                  </div>
-                                  <div ng-if="!class.tuition.fee" class="fw-light small">Contact us for pricing</div>
-                                </div>
-                                <div>
-                                  <div ng-if="!class.online_reg_link" class="pt-2 small fw-light">Contact us to register</div>
-                                  <div ng-if="class.online_reg_link">
-                                    <a ng-if="class.openings.calculated_openings > 0" ng-href="{{class.online_reg_link}}" target="_blank" class="btn btn-sm px-3 text-white" ng-class="'btn-' + brandColor">Register</a>
-                                    <a ng-if="class.openings.calculated_openings <= 0" ng-href="{{class.online_reg_link}}" target="_blank" class="btn btn-sm px-3" ng-class="'btn-outline-' + brandColor">Wait List</a>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="tab-pane fade" id="pills-table" role="tabpanel" aria-labelledby="pills-table-tab" tabindex="0">
-                      <!-- table layout -->
-                      <div class="table-responsive-md">
-                        <table class="table table-striped mb-5">
-                          <tbody>
-                            <tr ng-repeat="class in results = (classes | orderBy:['start_date','min_age'] | filter:searchparam | filter:filterAge | filter:{category2:camptype} | filter:subfilter | dayFilter:daygroup.short)">
-                              <td class="w-100">
-                                <div class="fw-bold">{{class.name}}
-                                  <!-- open modal window for class detail -->
-                                  <button type="button" class="btn btn-link p-0 ms-1" ng-click="setClassModal(class)" data-bs-toggle="modal" data-bs-target="#classModal">
-                                    <i class="fa-solid fa-circle-info"></i>
-                                  </button>
-                                </div>
-                                <div class="fw-light">Ages {{class.min_age}} - {{class.max_age}}</div>
-                                <!-- <div class="py-1">
-                                  <a class="text-nowrap small fw-bold" ng-class="'text-' + brandColor" data-bs-toggle="collapse" href="#collapseExample{{$index}}" role="button" aria-expanded="false" aria-controls="collapseExample{{$index}}">
-                                    <span class="me-1">Camp Description</span>
-                                    <i class="fas fa-chevron-down expanded-indicator"></i>
-                                  </a>    
-                                </div> -->
-                                <div class="collapse" id="collapseExample{{$index}}">
-                                  <div ng-if="class.description" class="small fw-light" ng-bind-html="class.description | to_trusted"></div>
-                                </div>
-                              </td>
-                              <td class="fw-light text-nowrap">
-                                <div>{{class.start_date | date:'mediumDate'}} - {{class.end_date | date:'mediumDate'}}</div>
-                                <div>{{class.start_time}} - {{class.end_time}}</div>
-                              </td>
-                              <td class="text-end text-nowrap">
-                                <div ng-if="!class.online_reg_link" class="pt-2 small fw-light">Contact us to register</div>
-                                <div ng-if="class.online_reg_link">
-                                  <a ng-if="class.openings.calculated_openings > 0" ng-href="{{class.online_reg_link}}" target="_blank" class="btn btn-sm px-3 text-nowrap text-white" ng-class="'btn-' + brandColor">Register</a>
-                                  <a ng-if="class.openings.calculated_openings <= 0" ng-href="{{class.online_reg_link}}" target="_blank" class="btn btn-sm px-3 text-nowrap" ng-class="'btn-outline-' + brandColor">Wait List</a>
-                                </div>
-                                <div ng-if="class.tuition.fee">
-                                  <span class="">{{ class.tuition.fee | currency:'$':2 }}</span>
-                                  <span class="fw-light tiny">+ HST</span>
-                                </div>
-                                <div ng-if="!class.tuition.fee" class="fw-light small">Contact for pricing</div>                  
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>              
-    
-    
-        
+              <div class="fw-light">
+                <p>Lorem ipsum dolor sit amet. Eum repudiandae sint eum sunt excepturi in esse molestiae et internos aliquam est consectetur sint qui iste consequatur aut autem reprehenderit. Id eius aspernatur qui dolor autem et facere voluptatem qui explicabo soluta non consectetur exercitationem ad ratione dignissimos. Et provident aspernatur et voluptas similique in labore sint. Et voluptatem alias sit nobis molestiae est dolorem nobis in fugiat maxime. Et quam fugit qui nesciunt commodi est consequatur architecto 33 voluptatem quisquam et natus itaque.</p>
+                <p>Ut enim galisum ut doloremque tempore quo perferendis blanditiis et autem sint. Vel mollitia totam aut nulla nostrum vel dolores nobis qui eligendi internos qui itaque inventore non fugit consequuntur et quia impedit. Ut quaerat quia ut dolore explicabo et voluptas error qui velit inventore. Rem quaerat repellat sit inventore unde vel dolore aspernatur! Qui dicta quidem ut quaerat atque aut earum voluptatem ut odit dignissimos hic autem atque hic eligendi cumque vel provident voluptatum.</p>
+                <p>Id nesciunt veritatis aut reprehenderit quae et magni consequatur vel ipsum fugit nam nostrum similique et aspernatur saepe. In velit consectetur sit voluptatem deleniti et reprehenderit culpa vel exercitationem adipisci sed numquam architecto. Vel earum consequatur qui modi ratione est dolorem adipisci eos aliquid incidunt. Et consequatur omnis quo voluptatem nemo et sunt sint id eius ratione nam distinctio eaque. Vel consequatur repellat non vero error et excepturi reprehenderit. Ut eaque distinctio ut voluptatibus perspiciatis ab porro sequi non modi Quis rem vero exercitationem id placeat inventore eos maiores tempore. Ex iste eligendi repudiandae sint ea magnam Quis et distinctio voluptas et repellendus enim? Non quia labore et quaerat impedit qui galisum ducimus id quasi magni ab ipsum itaque sit voluptate excepturi. Est iure asperiores cum facere voluptatem ut consequatur amet et dolorem odio.</p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card mb-4 shadow" ng-repeat="item in [1,2]">
+                <img src="https://picsum.photos/300/100?random={{item}}" class="card-img-top" alt="image">
+                <div class="card-body">
+                  <h5>Sample Card {{ item }}</h5>
+                  <p>This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                 </div>
               </div>
             </div>
           </div>
-    
-          <!-- <div class="py-5">
-            <hr>
-          </div>
-        
-          <div ng-init="getClasses('Camp', 'Recreational Gymnastics', '')" ng-controller="ClassController">
-            <div ng-include="'./_list-basic.html'" ng-init="brandColor='danger'"></div>
-          </div>
-    
-          <div class="py-5">
-            <hr>
-          </div>
-    
-          <div ng-init="getClasses('Dance', 'Recreational', 'Hip Hop')" ng-controller="ClassController">
-            <div ng-include="'./_list-byday.html'" ng-init="brandColor='info'"></div>
-          </div> -->
-          
         </div>
       </div>
       <div class="footer">
-        <div class="bg-dark p-5 text-center text-white">Footer Placeholder</div>
+        <!-- banner include -->
+        <div ng-include src="'./footer.html'"></div>
       </div>
     </div>
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 
