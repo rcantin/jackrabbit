@@ -16,7 +16,7 @@ myApp.controller("MainController", function ($scope, $http, serviceLocalStorage)
   $scope.storageexample = serviceLocalStorage.get('LocalStorageExample');
 
   // default class type
-  $scope.classtype = "Tae Kwon Do";
+  $scope.classtype = "";
 
   $scope.setClassModal = function (classdata) {
     $scope.classModalDetail = classdata;
@@ -26,8 +26,8 @@ myApp.controller("MainController", function ($scope, $http, serviceLocalStorage)
   $scope.filterAge = function(item){
     var filterAge = $scope.age;
     if (filterAge) { // check if there is an age entered and if not then just return the item
-      var min = item.min_age * 1;
-      var max = item.max_age * 1;
+      var min = item.min_age ? item.min_age * 1 : 0; // ternary operator - if min_age is defined then use min_age, otherwise set min to 0
+      var max = item.max_age ? item.max_age * 1 : 999; // ternary operator - if max_age is defined then use max_age, otherwise set max to 999
       if (filterAge >= min && filterAge <= max) { // if the age is between the min and max, return the item
         return item
       }

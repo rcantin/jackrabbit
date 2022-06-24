@@ -24,7 +24,7 @@
             <div class="row row-cols-2 g-3 mb-4">
               <div class="col text-center">
                 <div class="text-uppercase text-muted fw-light">Date</div>
-                <div class="fw-bold">{{classModalDetail.start_date | date:'mediumDate'}} - {{classModalDetail.end_date | date:'mediumDate'}}</div>
+                <div class="fw-bold">{{classModalDetail.start_date | date:'mediumDate'}} <span ng-if="classModalDetail.end_date">- {{classModalDetail.end_date | date:'mediumDate'}}</span></div>
               </div>
               <div class="col text-center">
                 <div class="text-uppercase text-muted fw-light">Time</div>
@@ -32,7 +32,13 @@
               </div>
               <div class="col text-center">
                 <div class="text-uppercase text-muted fw-light">Ages</div>
-                <div class="fw-bold">{{classModalDetail.min_age}} - {{classModalDetail.max_age}}</div>
+                <div class="fw-bold">
+                  <span ng-if="classModalDetail.min_age">{{classModalDetail.min_age}}</span>
+                  <span ng-if="!classModalDetail.min_age">No min.</span>
+                  <span>-</span>
+                  <span ng-if="classModalDetail.max_age">{{classModalDetail.max_age}}</span>
+                  <span ng-if="!classModalDetail.max_age">No max.</span>
+                </div>
               </div>
               <div class="col text-center">
                 <div class="text-uppercase text-muted fw-light">Tuition</div>
@@ -73,6 +79,7 @@
               <div class="col-12 col-sm-6 col-lg-3">
                 <label for="classtype" class="form-label mb-1 small fw-bold">Class Type</label>
                 <select ng-model="classtype" class="form-select" id="">
+                  <option value="">Any Regular Class</option>
                   <option value="Tae Kwon Do">Tae Kwon Do</option>
                   <option value="Fitness Kickboxing">Fitness Kickboxing</option>
                   <option value="Adaptive">Adaptive</option>
@@ -180,9 +187,15 @@
                                 </div>
                               </div>
                               <div class="small">
-                                <div ng-if="class.start_date" class="">{{class.start_date | date:'mediumDate'}} - {{class.end_date | date:'mediumDate'}}</div>
+                                <div ng-if="class.start_date" class="">{{class.start_date | date:'mediumDate'}} <span ng-if="class.end_date">- {{class.end_date | date:'mediumDate'}}</span></div>
                                 <div ng-if="class.meeting_days.daylist" class="text-capitalize"><span>{{class.start_time}} - {{class.end_time}}</span></div>
-                                <div ng-if="class.min_age">Ages {{class.min_age}} - {{class.max_age}}</div>
+                                <div ng-if="class.min_age">Ages {{class.min_age}} - 
+                                  <span ng-if="class.min_age">{{class.min_age}}</span>
+                                  <span ng-if="!class.min_age">No min.</span>
+                                  <span>-</span>
+                                  <span ng-if="class.max_age">{{class.max_age}}</span>
+                                  <span ng-if="!class.max_age">No max.</span>
+                                </div>
                               </div>
                             </div>
                             <div class="px-3 pb-3">
@@ -213,7 +226,7 @@
                       <div class="table-responsive-md">
                         <table class="table table-striped mb-5">
                           <tbody>
-                            <tr ng-repeat="class in results = (classes | orderBy:['start_date','min_age'] | filter:searchparam | filter:myFilter | filter:filterAge | filter:filterDay | filter:{category2:classtype})">
+                            <tr ng-repeat="class in results = (classes | orderBy:['start_date','min_age'] | filter:searchparam | filter:filterAge | filter:filterDay | filter:{category2:classtype})">
                               <td class="w-100">
                                 <div class="fw-bold">{{class.name}}
                                   <!-- open modal window for class detail -->
@@ -221,13 +234,19 @@
                                     <i class="fa-solid fa-circle-info"></i>
                                   </button>
                                 </div>
-                                <div class="fw-light">Ages {{class.min_age}} - {{class.max_age}}</div>
+                                <div class="fw-light">Ages 
+                                  <span ng-if="class.min_age">{{class.min_age}}</span>
+                                  <span ng-if="!class.min_age">No min.</span>
+                                  <span>-</span>
+                                  <span ng-if="class.max_age">{{class.max_age}}</span>
+                                  <span ng-if="!class.max_age">No max.</span>
+                                </div>
                                 <div class="collapse" id="collapseExample{{$index}}">
                                   <div ng-if="class.description" class="small fw-light" ng-bind-html="class.description | to_trusted"></div>
                                 </div>
                               </td>
                               <td class="fw-light text-nowrap">
-                                <div>{{class.start_date | date:'mediumDate'}} - {{class.end_date | date:'mediumDate'}}</div>
+                                <div>{{class.start_date | date:'mediumDate'}} <span ng-if="class.end_date">- {{class.end_date | date:'mediumDate'}}</span></div>
                                 <div>{{class.start_time}} - {{class.end_time}}</div>
                               </td>
                               <td class="text-end text-nowrap">
